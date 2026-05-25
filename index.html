@@ -301,7 +301,16 @@ button:hover{
         <div class="analysis-box" id="analysisBox">
             Waiting for analysis...
         </div>
+<div class="chart-card">
 
+    <h2>Recent Activity</h2>
+
+    <div id="historyContainer">
+
+    </div>
+
+</div>
+        
     </div>
 
     <div class="chart-card">
@@ -400,8 +409,27 @@ function analyzeData(){
     localStorage.setItem('score', score);
     localStorage.setItem('analysis', analysis);
 
-    updateChart(study,sleep,social,grade);
+    let history =
+    JSON.parse(localStorage.getItem('history')) || [];
 
+history.push({
+
+    study: study,
+    sleep: sleep,
+    social: social,
+    grade: grade,
+    score: score,
+    date: new Date().toLocaleDateString()
+
+});
+
+localStorage.setItem(
+    'history',
+    JSON.stringify(history)
+);
+
+    updateChart(study,sleep,social,grade);
+loadHistory();
 }
 
 function updateChart(study,sleep,social,grade){
@@ -459,7 +487,7 @@ function updateChart(study,sleep,social,grade){
 
 }
 window.onload = function(){
-
+loadHistory();
     let savedStudy = localStorage.getItem('study');
     let savedSleep = localStorage.getItem('sleep');
     let savedSocial = localStorage.getItem('social');
@@ -491,6 +519,56 @@ window.onload = function(){
         );
 
     }
+
+}
+    function loadHistory(){
+
+    let history =
+        JSON.parse(localStorage.getItem('history')) || [];
+
+    let container =
+        document.getElementById('historyContainer');
+
+    container.innerHTML = '';
+
+    history.reverse().slice(0,5).forEach(item => {
+
+        container.innerHTML += `
+
+        <div style="
+            background:#0F172A;
+            padding:15px;
+            border-radius:18px;
+            margin-top:12px;
+        ">
+
+            <strong style="
+                color:#38BDF8;
+                font-size:18px;
+            ">
+                ${item.score}%
+            </strong>
+
+            <p style="
+                color:#CBD5E1;
+                margin-top:8px;
+            ">
+                Study: ${item.study}h |
+                Sleep: ${item.sleep}h |
+                Grade: ${item.grade}
+            </p>
+
+            <small style="
+                color:#64748B;
+            ">
+                ${item.date}
+            </small>
+
+        </div>
+
+        `;
+
+    });
 
 }
 </script>
