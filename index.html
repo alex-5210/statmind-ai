@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>StatMind AI</title>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 
@@ -20,38 +23,36 @@
 body{
     background:#0F172A;
     color:white;
-    min-height:100vh;
     overflow-x:hidden;
 }
 
 .container{
-    width:100%;
     max-width:500px;
     margin:auto;
     padding:20px;
-    padding-bottom:100px;
+    padding-bottom:120px;
 }
 
 .header{
     margin-top:20px;
 }
 
-.logo-box{
-    width:70px;
-    height:70px;
-    border-radius:20px;
+.logo{
+    width:75px;
+    height:75px;
+    border-radius:22px;
     background:linear-gradient(135deg,#38BDF8,#06B6D4);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:32px;
-    box-shadow:0 10px 30px rgba(56,189,248,0.3);
+    font-size:34px;
+    box-shadow:0 10px 30px rgba(56,189,248,0.35);
 }
 
 .title{
+    margin-top:18px;
     font-size:34px;
     font-weight:700;
-    margin-top:18px;
 }
 
 .subtitle{
@@ -61,8 +62,8 @@ body{
 }
 
 .main-card{
-    margin-top:30px;
-    background:linear-gradient(135deg,#1E293B,#0F172A);
+    margin-top:28px;
+    background:linear-gradient(135deg,#1E293B,#111827);
     border-radius:30px;
     padding:28px;
     box-shadow:0 15px 40px rgba(0,0,0,0.3);
@@ -76,19 +77,19 @@ body{
 }
 
 .score{
-    font-size:64px;
+    font-size:68px;
     font-weight:700;
-    margin-top:10px;
     color:#38BDF8;
-}
-
-.ai-text{
-    color:#94A3B8;
     margin-top:10px;
-    line-height:1.6;
 }
 
-.stats-grid{
+.ai-message{
+    margin-top:10px;
+    color:#94A3B8;
+    line-height:1.7;
+}
+
+.grid{
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:15px;
@@ -97,14 +98,14 @@ body{
 
 .small-card{
     background:#1E293B;
-    padding:20px;
-    border-radius:24px;
-    box-shadow:0 10px 20px rgba(0,0,0,0.2);
+    border-radius:25px;
+    padding:22px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
 }
 
 .small-card h3{
     color:#CBD5E1;
-    font-size:15px;
+    font-size:14px;
     font-weight:500;
 }
 
@@ -120,6 +121,10 @@ body{
 
 .cyan{
     color:#06B6D4;
+}
+
+.green{
+    color:#22C55E;
 }
 
 .form-card{
@@ -153,6 +158,7 @@ body{
     color:white;
     font-size:16px;
     outline:none;
+    transition:0.3s;
 }
 
 .input-group input:focus{
@@ -163,7 +169,7 @@ button{
     width:100%;
     padding:18px;
     border:none;
-    border-radius:20px;
+    border-radius:22px;
     background:linear-gradient(135deg,#38BDF8,#06B6D4);
     color:white;
     font-size:18px;
@@ -174,6 +180,15 @@ button{
 
 button:hover{
     transform:translateY(-2px);
+}
+
+.analysis-box{
+    margin-top:20px;
+    background:#0F172A;
+    border-radius:20px;
+    padding:20px;
+    color:#CBD5E1;
+    line-height:1.7;
 }
 
 .chart-card{
@@ -187,6 +202,31 @@ button:hover{
     margin-bottom:20px;
 }
 
+.history-item{
+    background:#0F172A;
+    border-radius:20px;
+    padding:16px;
+    margin-top:15px;
+}
+
+.history-score{
+    color:#38BDF8;
+    font-size:22px;
+    font-weight:700;
+}
+
+.history-text{
+    margin-top:8px;
+    color:#CBD5E1;
+    line-height:1.6;
+}
+
+.history-date{
+    color:#64748B;
+    margin-top:6px;
+    display:block;
+}
+
 .bottom-nav{
     position:fixed;
     bottom:0;
@@ -197,6 +237,7 @@ button:hover{
     justify-content:space-around;
     padding:15px 0;
     border-top:1px solid rgba(255,255,255,0.05);
+    z-index:999;
 }
 
 .nav-item{
@@ -211,24 +252,32 @@ button:hover{
     color:#38BDF8;
 }
 
-.analysis-box{
-    margin-top:20px;
-    background:#0F172A;
-    border-radius:20px;
-    padding:20px;
-    color:#CBD5E1;
-    line-height:1.6;
+.fade{
+    animation:fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
 }
 
 </style>
+
 </head>
+
 <body>
 
-<div class="container">
+<div class="container fade">
 
     <div class="header">
 
-        <div class="logo-box">
+        <div class="logo">
             🧠
         </div>
 
@@ -247,25 +296,35 @@ button:hover{
         <h2>Productivity Score</h2>
 
         <div class="score" id="score">
-            92%
+            0%
         </div>
 
-        <div class="ai-text" id="analysisText">
-            AI predicts excellent academic performance based on your current habits.
+        <div class="ai-message" id="mainAnalysis">
+            Start analyzing your habits to receive AI-powered insights.
         </div>
 
     </div>
 
-    <div class="stats-grid">
+    <div class="grid">
 
         <div class="small-card">
             <h3>Study Hours</h3>
-            <p class="blue" id="studyDisplay">5.2h</p>
+            <p class="blue" id="studyDisplay">0h</p>
         </div>
 
         <div class="small-card">
-            <h3>Sleep Score</h3>
-            <p class="cyan" id="sleepDisplay">87%</p>
+            <h3>Sleep Quality</h3>
+            <p class="cyan" id="sleepDisplay">0%</p>
+        </div>
+
+        <div class="small-card">
+            <h3>Academic Grade</h3>
+            <p class="green" id="gradeDisplay">0</p>
+        </div>
+
+        <div class="small-card">
+            <h3>AI Status</h3>
+            <p class="blue" id="statusDisplay">Idle</p>
         </div>
 
     </div>
@@ -290,7 +349,7 @@ button:hover{
         </div>
 
         <div class="input-group">
-            <label>Grade</label>
+            <label>Academic Grade</label>
             <input type="number" id="grade" placeholder="Example: 9">
         </div>
 
@@ -299,25 +358,26 @@ button:hover{
         </button>
 
         <div class="analysis-box" id="analysisBox">
-            Waiting for analysis...
+            Waiting for AI analysis...
         </div>
-<div class="chart-card">
 
-    <h2>Recent Activity</h2>
-
-    <div id="historyContainer">
-
-    </div>
-
-</div>
-        
     </div>
 
     <div class="chart-card">
 
         <h2>Performance Analytics</h2>
 
-        <canvas id="chart"></canvas>
+        <canvas id="analyticsChart"></canvas>
+
+    </div>
+
+    <div class="chart-card">
+
+        <h2>Recent Activity</h2>
+
+        <div id="historyContainer">
+
+        </div>
 
     </div>
 
@@ -353,10 +413,17 @@ let chart;
 
 function analyzeData(){
 
-    let study = parseFloat(document.getElementById('study').value);
-    let sleep = parseFloat(document.getElementById('sleep').value);
-    let social = parseFloat(document.getElementById('social').value);
-    let grade = parseFloat(document.getElementById('grade').value);
+    let study =
+        parseFloat(document.getElementById('study').value);
+
+    let sleep =
+        parseFloat(document.getElementById('sleep').value);
+
+    let social =
+        parseFloat(document.getElementById('social').value);
+
+    let grade =
+        parseFloat(document.getElementById('grade').value);
 
     if(
         isNaN(study) ||
@@ -364,7 +431,7 @@ function analyzeData(){
         isNaN(social) ||
         isNaN(grade)
     ){
-        alert('Please complete all fields');
+        alert('Please complete all fields.');
         return;
     }
 
@@ -380,148 +447,172 @@ function analyzeData(){
         score = 0;
     }
 
-    document.getElementById('score').innerText = score + '%';
-
-    document.getElementById('studyDisplay').innerText = study + 'h';
-
-    document.getElementById('sleepDisplay').innerText = Math.round((sleep/8)*100) + '%';
-
     let analysis = '';
+    let status = '';
 
     if(score >= 85){
-        analysis = 'Excellent performance detected. Your habits are highly productive and AI predicts strong academic results.';
+
+        analysis =
+        'Excellent productivity detected. AI predicts high academic performance and excellent habit consistency.';
+
+        status = 'Excellent';
+
     }
+
     else if(score >= 60){
-        analysis = 'Good balance detected, but reducing social media usage may improve your productivity significantly.';
+
+        analysis =
+        'Good balance detected. Reducing social media usage could significantly improve your results.';
+
+        status = 'Good';
+
     }
+
     else{
-        analysis = 'Low productivity detected. AI recommends increasing study time and improving sleep habits.';
+
+        analysis =
+        'Low productivity detected. AI recommends increasing study time and improving sleep quality.';
+
+        status = 'Warning';
+
     }
 
-    document.getElementById('analysisBox').innerText = analysis;
+    document.getElementById('score').innerText =
+        score + '%';
 
-    document.getElementById('analysisText').innerText = analysis;
+    document.getElementById('studyDisplay').innerText =
+        study + 'h';
 
-    localStorage.setItem('study', study);
-    localStorage.setItem('sleep', sleep);
-    localStorage.setItem('social', social);
-    localStorage.setItem('grade', grade);
-    localStorage.setItem('score', score);
-    localStorage.setItem('analysis', analysis);
+    document.getElementById('sleepDisplay').innerText =
+        Math.round((sleep/8)*100) + '%';
 
-    let history =
-    JSON.parse(localStorage.getItem('history')) || [];
+    document.getElementById('gradeDisplay').innerText =
+        grade;
 
-history.push({
+    document.getElementById('statusDisplay').innerText =
+        status;
 
-    study: study,
-    sleep: sleep,
-    social: social,
-    grade: grade,
-    score: score,
-    date: new Date().toLocaleDateString()
+    document.getElementById('analysisBox').innerText =
+        analysis;
 
-});
-
-localStorage.setItem(
-    'history',
-    JSON.stringify(history)
-);
+    document.getElementById('mainAnalysis').innerText =
+        analysis;
 
     updateChart(study,sleep,social,grade);
-loadHistory();
+
+    localStorage.setItem('study',study);
+    localStorage.setItem('sleep',sleep);
+    localStorage.setItem('social',social);
+    localStorage.setItem('grade',grade);
+    localStorage.setItem('score',score);
+    localStorage.setItem('analysis',analysis);
+
+    let history =
+        JSON.parse(localStorage.getItem('history')) || [];
+
+    history.push({
+
+        study:study,
+        sleep:sleep,
+        social:social,
+        grade:grade,
+        score:score,
+        date:new Date().toLocaleString()
+
+    });
+
+    localStorage.setItem(
+        'history',
+        JSON.stringify(history)
+    );
+
+    loadHistory();
+
 }
 
 function updateChart(study,sleep,social,grade){
 
-    const ctx = document.getElementById('chart');
+    const ctx =
+        document.getElementById('analyticsChart');
 
     if(chart){
         chart.destroy();
     }
 
-    chart = new Chart(ctx, {
+    chart = new Chart(ctx,{
+
         type:'bar',
+
         data:{
+
             labels:[
                 'Study',
                 'Sleep',
                 'Social',
                 'Grade'
             ],
+
             datasets:[{
+
                 label:'Student Analytics',
-                data:[study,sleep,social,grade],
+
+                data:[
+                    study,
+                    sleep,
+                    social,
+                    grade
+                ],
+
                 backgroundColor:[
                     '#38BDF8',
                     '#06B6D4',
                     '#9333EA',
                     '#22C55E'
                 ],
+
                 borderRadius:15
+
             }]
+
         },
+
         options:{
+
             responsive:true,
+
             plugins:{
+
                 legend:{
                     labels:{
                         color:'white'
                     }
                 }
+
             },
+
             scales:{
+
                 x:{
                     ticks:{
                         color:'white'
                     }
                 },
+
                 y:{
                     ticks:{
                         color:'white'
                     }
                 }
+
             }
+
         }
+
     });
 
 }
-window.onload = function(){
-loadHistory();
-    let savedStudy = localStorage.getItem('study');
-    let savedSleep = localStorage.getItem('sleep');
-    let savedSocial = localStorage.getItem('social');
-    let savedGrade = localStorage.getItem('grade');
-    let savedScore = localStorage.getItem('score');
-    let savedAnalysis = localStorage.getItem('analysis');
 
-    if(savedStudy){
-
-        document.getElementById('study').value = savedStudy;
-        document.getElementById('sleep').value = savedSleep;
-        document.getElementById('social').value = savedSocial;
-        document.getElementById('grade').value = savedGrade;
-
-        document.getElementById('score').innerText =
-            savedScore + '%';
-
-        document.getElementById('analysisBox').innerText =
-            savedAnalysis;
-
-        document.getElementById('analysisText').innerText =
-            savedAnalysis;
-
-        updateChart(
-            savedStudy,
-            savedSleep,
-            savedSocial,
-            savedGrade
-        );
-
-    }
-
-}
-    function loadHistory(){
+function loadHistory(){
 
     let history =
         JSON.parse(localStorage.getItem('history')) || [];
@@ -535,32 +626,25 @@ loadHistory();
 
         container.innerHTML += `
 
-        <div style="
-            background:#0F172A;
-            padding:15px;
-            border-radius:18px;
-            margin-top:12px;
-        ">
+        <div class="history-item">
 
-            <strong style="
-                color:#38BDF8;
-                font-size:18px;
-            ">
+            <div class="history-score">
                 ${item.score}%
-            </strong>
+            </div>
 
-            <p style="
-                color:#CBD5E1;
-                margin-top:8px;
-            ">
-                Study: ${item.study}h |
-                Sleep: ${item.sleep}h |
+            <div class="history-text">
+
+                Study: ${item.study}h
+                <br>
+
+                Sleep: ${item.sleep}h
+                <br>
+
                 Grade: ${item.grade}
-            </p>
 
-            <small style="
-                color:#64748B;
-            ">
+            </div>
+
+            <small class="history-date">
                 ${item.date}
             </small>
 
@@ -571,6 +655,72 @@ loadHistory();
     });
 
 }
+
+window.onload = function(){
+
+    let savedStudy =
+        localStorage.getItem('study');
+
+    let savedSleep =
+        localStorage.getItem('sleep');
+
+    let savedSocial =
+        localStorage.getItem('social');
+
+    let savedGrade =
+        localStorage.getItem('grade');
+
+    let savedScore =
+        localStorage.getItem('score');
+
+    let savedAnalysis =
+        localStorage.getItem('analysis');
+
+    if(savedStudy){
+
+        document.getElementById('study').value =
+            savedStudy;
+
+        document.getElementById('sleep').value =
+            savedSleep;
+
+        document.getElementById('social').value =
+            savedSocial;
+
+        document.getElementById('grade').value =
+            savedGrade;
+
+        document.getElementById('score').innerText =
+            savedScore + '%';
+
+        document.getElementById('analysisBox').innerText =
+            savedAnalysis;
+
+        document.getElementById('mainAnalysis').innerText =
+            savedAnalysis;
+
+        document.getElementById('studyDisplay').innerText =
+            savedStudy + 'h';
+
+        document.getElementById('sleepDisplay').innerText =
+            Math.round((savedSleep/8)*100) + '%';
+
+        document.getElementById('gradeDisplay').innerText =
+            savedGrade;
+
+        updateChart(
+            savedStudy,
+            savedSleep,
+            savedSocial,
+            savedGrade
+        );
+
+    }
+
+    loadHistory();
+
+}
+
 </script>
 
 </body>
