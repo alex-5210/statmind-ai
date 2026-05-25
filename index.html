@@ -393,6 +393,13 @@ function analyzeData(){
 
     document.getElementById('analysisText').innerText = analysis;
 
+    localStorage.setItem('study', study);
+    localStorage.setItem('sleep', sleep);
+    localStorage.setItem('social', social);
+    localStorage.setItem('grade', grade);
+    localStorage.setItem('score', score);
+    localStorage.setItem('analysis', analysis);
+
     updateChart(study,sleep,social,grade);
 
 }
@@ -451,7 +458,41 @@ function updateChart(study,sleep,social,grade){
     });
 
 }
+window.onload = function(){
 
+    let savedStudy = localStorage.getItem('study');
+    let savedSleep = localStorage.getItem('sleep');
+    let savedSocial = localStorage.getItem('social');
+    let savedGrade = localStorage.getItem('grade');
+    let savedScore = localStorage.getItem('score');
+    let savedAnalysis = localStorage.getItem('analysis');
+
+    if(savedStudy){
+
+        document.getElementById('study').value = savedStudy;
+        document.getElementById('sleep').value = savedSleep;
+        document.getElementById('social').value = savedSocial;
+        document.getElementById('grade').value = savedGrade;
+
+        document.getElementById('score').innerText =
+            savedScore + '%';
+
+        document.getElementById('analysisBox').innerText =
+            savedAnalysis;
+
+        document.getElementById('analysisText').innerText =
+            savedAnalysis;
+
+        updateChart(
+            savedStudy,
+            savedSleep,
+            savedSocial,
+            savedGrade
+        );
+
+    }
+
+}
 </script>
 
 </body>
