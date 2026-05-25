@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StatMind AI</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#0F172A;
+    color:white;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+.container{
+    width:100%;
+    max-width:500px;
+    margin:auto;
+    padding:20px;
+    padding-bottom:100px;
+}
+
+.header{
+    margin-top:20px;
+}
+
+.logo-box{
+    width:70px;
+    height:70px;
+    border-radius:20px;
+    background:linear-gradient(135deg,#38BDF8,#06B6D4);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+    box-shadow:0 10px 30px rgba(56,189,248,0.3);
+}
+
+.title{
+    font-size:34px;
+    font-weight:700;
+    margin-top:18px;
+}
+
+.subtitle{
+    color:#94A3B8;
+    margin-top:6px;
+    font-size:15px;
+}
+
+.main-card{
+    margin-top:30px;
+    background:linear-gradient(135deg,#1E293B,#0F172A);
+    border-radius:30px;
+    padding:28px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.3);
+    border:1px solid rgba(255,255,255,0.05);
+}
+
+.main-card h2{
+    color:#CBD5E1;
+    font-size:18px;
+    font-weight:500;
+}
+
+.score{
+    font-size:64px;
+    font-weight:700;
+    margin-top:10px;
+    color:#38BDF8;
+}
+
+.ai-text{
+    color:#94A3B8;
+    margin-top:10px;
+    line-height:1.6;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin-top:20px;
+}
+
+.small-card{
+    background:#1E293B;
+    padding:20px;
+    border-radius:24px;
+    box-shadow:0 10px 20px rgba(0,0,0,0.2);
+}
+
+.small-card h3{
+    color:#CBD5E1;
+    font-size:15px;
+    font-weight:500;
+}
+
+.small-card p{
+    margin-top:12px;
+    font-size:32px;
+    font-weight:700;
+}
+
+.blue{
+    color:#38BDF8;
+}
+
+.cyan{
+    color:#06B6D4;
+}
+
+.form-card{
+    margin-top:25px;
+    background:#1E293B;
+    border-radius:30px;
+    padding:25px;
+}
+
+.form-card h2{
+    margin-bottom:20px;
+}
+
+.input-group{
+    margin-bottom:18px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:8px;
+    color:#CBD5E1;
+    font-size:14px;
+}
+
+.input-group input{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:18px;
+    background:#0F172A;
+    color:white;
+    font-size:16px;
+    outline:none;
+}
+
+.input-group input:focus{
+    border:2px solid #38BDF8;
+}
+
+button{
+    width:100%;
+    padding:18px;
+    border:none;
+    border-radius:20px;
+    background:linear-gradient(135deg,#38BDF8,#06B6D4);
+    color:white;
+    font-size:18px;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+
+.chart-card{
+    margin-top:25px;
+    background:#1E293B;
+    border-radius:30px;
+    padding:25px;
+}
+
+.chart-card h2{
+    margin-bottom:20px;
+}
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:#111827;
+    display:flex;
+    justify-content:space-around;
+    padding:15px 0;
+    border-top:1px solid rgba(255,255,255,0.05);
+}
+
+.nav-item{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    color:#94A3B8;
+    font-size:12px;
+}
+
+.active{
+    color:#38BDF8;
+}
+
+.analysis-box{
+    margin-top:20px;
+    background:#0F172A;
+    border-radius:20px;
+    padding:20px;
+    color:#CBD5E1;
+    line-height:1.6;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <div class="logo-box">
+            🧠
+        </div>
+
+        <div class="title">
+            StatMind AI
+        </div>
+
+        <div class="subtitle">
+            AI-powered student productivity analytics
+        </div>
+
+    </div>
+
+    <div class="main-card">
+
+        <h2>Productivity Score</h2>
+
+        <div class="score" id="score">
+            92%
+        </div>
+
+        <div class="ai-text" id="analysisText">
+            AI predicts excellent academic performance based on your current habits.
+        </div>
+
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="small-card">
+            <h3>Study Hours</h3>
+            <p class="blue" id="studyDisplay">5.2h</p>
+        </div>
+
+        <div class="small-card">
+            <h3>Sleep Score</h3>
+            <p class="cyan" id="sleepDisplay">87%</p>
+        </div>
+
+    </div>
+
+    <div class="form-card">
+
+        <h2>Daily Analytics</h2>
+
+        <div class="input-group">
+            <label>Hours of Study</label>
+            <input type="number" id="study" placeholder="Example: 5">
+        </div>
+
+        <div class="input-group">
+            <label>Hours of Sleep</label>
+            <input type="number" id="sleep" placeholder="Example: 7">
+        </div>
+
+        <div class="input-group">
+            <label>Social Media Hours</label>
+            <input type="number" id="social" placeholder="Example: 3">
+        </div>
+
+        <div class="input-group">
+            <label>Grade</label>
+            <input type="number" id="grade" placeholder="Example: 9">
+        </div>
+
+        <button onclick="analyzeData()">
+            Analyze Data
+        </button>
+
+        <div class="analysis-box" id="analysisBox">
+            Waiting for analysis...
+        </div>
+
+    </div>
+
+    <div class="chart-card">
+
+        <h2>Performance Analytics</h2>
+
+        <canvas id="chart"></canvas>
+
+    </div>
+
+</div>
+
+<div class="bottom-nav">
+
+    <div class="nav-item active">
+        <div>🏠</div>
+        <span>Home</span>
+    </div>
+
+    <div class="nav-item">
+        <div>📊</div>
+        <span>Analytics</span>
+    </div>
+
+    <div class="nav-item">
+        <div>🤖</div>
+        <span>AI Coach</span>
+    </div>
+
+    <div class="nav-item">
+        <div>👤</div>
+        <span>Profile</span>
+    </div>
+
+</div>
+
+<script>
+
+let chart;
+
+function analyzeData(){
+
+    let study = parseFloat(document.getElementById('study').value);
+    let sleep = parseFloat(document.getElementById('sleep').value);
+    let social = parseFloat(document.getElementById('social').value);
+    let grade = parseFloat(document.getElementById('grade').value);
+
+    if(
+        isNaN(study) ||
+        isNaN(sleep) ||
+        isNaN(social) ||
+        isNaN(grade)
+    ){
+        alert('Please complete all fields');
+        return;
+    }
+
+    let score = Math.round(
+        (study*20 + sleep*10 + grade*8 - social*5)
+    );
+
+    if(score > 100){
+        score = 100;
+    }
+
+    if(score < 0){
+        score = 0;
+    }
+
+    document.getElementById('score').innerText = score + '%';
+
+    document.getElementById('studyDisplay').innerText = study + 'h';
+
+    document.getElementById('sleepDisplay').innerText = Math.round((sleep/8)*100) + '%';
+
+    let analysis = '';
+
+    if(score >= 85){
+        analysis = 'Excellent performance detected. Your habits are highly productive and AI predicts strong academic results.';
+    }
+    else if(score >= 60){
+        analysis = 'Good balance detected, but reducing social media usage may improve your productivity significantly.';
+    }
+    else{
+        analysis = 'Low productivity detected. AI recommends increasing study time and improving sleep habits.';
+    }
+
+    document.getElementById('analysisBox').innerText = analysis;
+
+    document.getElementById('analysisText').innerText = analysis;
+
+    updateChart(study,sleep,social,grade);
+
+}
+
+function updateChart(study,sleep,social,grade){
+
+    const ctx = document.getElementById('chart');
+
+    if(chart){
+        chart.destroy();
+    }
+
+    chart = new Chart(ctx, {
+        type:'bar',
+        data:{
+            labels:[
+                'Study',
+                'Sleep',
+                'Social',
+                'Grade'
+            ],
+            datasets:[{
+                label:'Student Analytics',
+                data:[study,sleep,social,grade],
+                backgroundColor:[
+                    '#38BDF8',
+                    '#06B6D4',
+                    '#9333EA',
+                    '#22C55E'
+                ],
+                borderRadius:15
+            }]
+        },
+        options:{
+            responsive:true,
+            plugins:{
+                legend:{
+                    labels:{
+                        color:'white'
+                    }
+                }
+            },
+            scales:{
+                x:{
+                    ticks:{
+                        color:'white'
+                    }
+                },
+                y:{
+                    ticks:{
+                        color:'white'
+                    }
+                }
+            }
+        }
+    });
+
+}
+
+</script>
+
+</body>
+</html>
