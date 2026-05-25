@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>StatMind AI</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>StatMind Analytics Pro</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
 
@@ -17,249 +14,51 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
 }
 
 body{
-    background:#0F172A;
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#0f172a,#1e293b,#111827);
+    min-height:100vh;
     color:white;
-    overflow-x:hidden;
+    padding:20px;
 }
 
 .container{
-    max-width:500px;
+    max-width:1200px;
     margin:auto;
-    padding:20px;
-    padding-bottom:120px;
 }
 
 .header{
-    margin-top:20px;
+    text-align:center;
+    margin-bottom:25px;
 }
 
-.logo{
-    width:75px;
-    height:75px;
-    border-radius:22px;
-    background:linear-gradient(135deg,#38BDF8,#06B6D4);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:34px;
-    box-shadow:0 10px 30px rgba(56,189,248,0.35);
+.header h1{
+    font-size:45px;
+    color:#38bdf8;
 }
 
-.title{
-    margin-top:18px;
-    font-size:34px;
-    font-weight:700;
-}
-
-.subtitle{
-    color:#94A3B8;
-    margin-top:6px;
-    font-size:15px;
-}
-
-.main-card{
-    margin-top:28px;
-    background:linear-gradient(135deg,#1E293B,#111827);
-    border-radius:30px;
-    padding:28px;
-    box-shadow:0 15px 40px rgba(0,0,0,0.3);
-    border:1px solid rgba(255,255,255,0.05);
-}
-
-.main-card h2{
-    color:#CBD5E1;
-    font-size:18px;
-    font-weight:500;
-}
-
-.score{
-    font-size:68px;
-    font-weight:700;
-    color:#38BDF8;
+.header p{
+    color:#cbd5e1;
     margin-top:10px;
 }
 
-.ai-message{
-    margin-top:10px;
-    color:#94A3B8;
-    line-height:1.7;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:15px;
-    margin-top:20px;
-}
-
-.small-card{
-    background:#1E293B;
+.card{
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.1);
     border-radius:25px;
-    padding:22px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.2);
-}
-
-.small-card h3{
-    color:#CBD5E1;
-    font-size:14px;
-    font-weight:500;
-}
-
-.small-card p{
-    margin-top:12px;
-    font-size:32px;
-    font-weight:700;
-}
-
-.blue{
-    color:#38BDF8;
-}
-
-.cyan{
-    color:#06B6D4;
-}
-
-.green{
-    color:#22C55E;
-}
-
-.form-card{
-    margin-top:25px;
-    background:#1E293B;
-    border-radius:30px;
     padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3);
+    animation:fade 0.7s ease;
 }
 
-.form-card h2{
-    margin-bottom:20px;
-}
-
-.input-group{
-    margin-bottom:18px;
-}
-
-.input-group label{
-    display:block;
-    margin-bottom:8px;
-    color:#CBD5E1;
-    font-size:14px;
-}
-
-.input-group input{
-    width:100%;
-    padding:16px;
-    border:none;
-    border-radius:18px;
-    background:#0F172A;
-    color:white;
-    font-size:16px;
-    outline:none;
-    transition:0.3s;
-}
-
-.input-group input:focus{
-    border:2px solid #38BDF8;
-}
-
-button{
-    width:100%;
-    padding:18px;
-    border:none;
-    border-radius:22px;
-    background:linear-gradient(135deg,#38BDF8,#06B6D4);
-    color:white;
-    font-size:18px;
-    font-weight:600;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-button:hover{
-    transform:translateY(-2px);
-}
-
-.analysis-box{
-    margin-top:20px;
-    background:#0F172A;
-    border-radius:20px;
-    padding:20px;
-    color:#CBD5E1;
-    line-height:1.7;
-}
-
-.chart-card{
-    margin-top:25px;
-    background:#1E293B;
-    border-radius:30px;
-    padding:25px;
-}
-
-.chart-card h2{
-    margin-bottom:20px;
-}
-
-.history-item{
-    background:#0F172A;
-    border-radius:20px;
-    padding:16px;
-    margin-top:15px;
-}
-
-.history-score{
-    color:#38BDF8;
-    font-size:22px;
-    font-weight:700;
-}
-
-.history-text{
-    margin-top:8px;
-    color:#CBD5E1;
-    line-height:1.6;
-}
-
-.history-date{
-    color:#64748B;
-    margin-top:6px;
-    display:block;
-}
-
-.bottom-nav{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    background:#111827;
-    display:flex;
-    justify-content:space-around;
-    padding:15px 0;
-    border-top:1px solid rgba(255,255,255,0.05);
-    z-index:999;
-}
-
-.nav-item{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    color:#94A3B8;
-    font-size:12px;
-}
-
-.active{
-    color:#38BDF8;
-}
-
-.fade{
-    animation:fadeIn 0.6s ease;
-}
-
-@keyframes fadeIn{
+@keyframes fade{
     from{
         opacity:0;
-        transform:translateY(10px);
+        transform:translateY(20px);
     }
     to{
         opacity:1;
@@ -267,459 +66,605 @@ button:hover{
     }
 }
 
-</style>
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:18px;
+}
 
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+    color:#e2e8f0;
+}
+
+input,select{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:15px;
+    background:#1e293b;
+    color:white;
+    font-size:16px;
+}
+
+input:focus,select:focus{
+    outline:none;
+    border:2px solid #38bdf8;
+}
+
+.buttons{
+    display:flex;
+    gap:15px;
+    margin-top:20px;
+}
+
+button{
+    flex:1;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:translateY(-3px);
+}
+
+.save-btn{
+    background:linear-gradient(90deg,#06b6d4,#3b82f6);
+    color:white;
+}
+
+.clear-btn{
+    background:linear-gradient(90deg,#ef4444,#dc2626);
+    color:white;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+    margin-top:20px;
+}
+
+.stat-box{
+    background:#0f172a;
+    border-radius:20px;
+    padding:20px;
+    text-align:center;
+    transition:0.3s;
+}
+
+.stat-box:hover{
+    transform:scale(1.03);
+}
+
+.stat-box h3{
+    color:#38bdf8;
+    margin-bottom:10px;
+}
+
+.stat-box p{
+    font-size:30px;
+    font-weight:bold;
+}
+
+.analysis{
+    margin-top:25px;
+    background:#0f172a;
+    padding:20px;
+    border-radius:20px;
+    line-height:1.8;
+}
+
+canvas{
+    margin-top:30px;
+    background:white;
+    border-radius:20px;
+    padding:15px;
+}
+
+.table-container{
+    overflow-x:auto;
+    margin-top:30px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#0284c7;
+    padding:12px;
+}
+
+td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.badge{
+    display:inline-block;
+    padding:10px 15px;
+    border-radius:30px;
+    background:#22c55e;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+.footer{
+    text-align:center;
+    margin-top:20px;
+    color:#94a3b8;
+}
+
+@media(max-width:700px){
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    .header h1{
+        font-size:34px;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
 
-<div class="container fade">
+<div class="container">
 
     <div class="header">
+        <h1><i class="fa-solid fa-chart-line"></i> StatMind Analytics Pro</h1>
+        <p>AI-Powered Student Productivity Dashboard</p>
+    </div>
 
-        <div class="logo">
-            🧠
+    <div class="card">
+
+        <div class="grid">
+
+            <div>
+                <label><i class="fa-solid fa-bed"></i> Hours of Sleep</label>
+                <input type="number" id="sleep" placeholder="Example: 7">
+            </div>
+
+            <div>
+                <label><i class="fa-solid fa-book"></i> Hours of Study</label>
+                <input type="number" id="study" placeholder="Example: 4">
+            </div>
+
+            <div>
+                <label><i class="fa-solid fa-mobile-screen"></i> Social Media Usage</label>
+                <input type="number" id="social" placeholder="Example: 3">
+            </div>
+
+            <div>
+                <label><i class="fa-solid fa-graduation-cap"></i> Grade</label>
+                <input type="number" id="grade" placeholder="Example: 8.5">
+            </div>
+
+            <div>
+                <label><i class="fa-solid fa-bolt"></i> Productivity</label>
+                <select id="productivity">
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                </select>
+            </div>
+
+            <div>
+                <label><i class="fa-solid fa-face-smile"></i> Mood</label>
+                <select id="mood">
+                    <option>Happy</option>
+                    <option>Neutral</option>
+                    <option>Stressed</option>
+                </select>
+            </div>
+
         </div>
 
-        <div class="title">
-            StatMind AI
-        </div>
+        <div class="buttons">
+            <button class="save-btn" onclick="saveData()">
+                <i class="fa-solid fa-floppy-disk"></i>
+                Save Data
+            </button>
 
-        <div class="subtitle">
-            AI-powered student productivity analytics
+            <button class="clear-btn" onclick="clearData()">
+                <i class="fa-solid fa-trash"></i>
+                Clear Data
+            </button>
         </div>
 
     </div>
 
-    <div class="main-card">
+    <div class="card">
 
-        <h2>Productivity Score</h2>
+        <h2><i class="fa-solid fa-chart-pie"></i> Dashboard</h2>
 
-        <div class="score" id="score">
-            0%
+        <div class="stats">
+
+            <div class="stat-box">
+                <h3>Average Sleep</h3>
+                <p id="avgSleep">0</p>
+            </div>
+
+            <div class="stat-box">
+                <h3>Average Study</h3>
+                <p id="avgStudy">0</p>
+            </div>
+
+            <div class="stat-box">
+                <h3>Average Grade</h3>
+                <p id="avgGrade">0</p>
+            </div>
+
+            <div class="stat-box">
+                <h3>Correlation</h3>
+                <p id="correlation">0</p>
+            </div>
+
         </div>
 
-        <div class="ai-message" id="mainAnalysis">
-            Start analyzing your habits to receive AI-powered insights.
+        <div class="analysis" id="analysis">
+            No analysis available yet.
         </div>
 
-    </div>
-
-    <div class="grid">
-
-        <div class="small-card">
-            <h3>Study Hours</h3>
-            <p class="blue" id="studyDisplay">0h</p>
+        <div class="badge" id="achievement">
+            🎯 Start adding data!
         </div>
 
-        <div class="small-card">
-            <h3>Sleep Quality</h3>
-            <p class="cyan" id="sleepDisplay">0%</p>
-        </div>
+        <canvas id="gradesChart"></canvas>
 
-        <div class="small-card">
-            <h3>Academic Grade</h3>
-            <p class="green" id="gradeDisplay">0</p>
-        </div>
+        <canvas id="habitsChart"></canvas>
 
-        <div class="small-card">
-            <h3>AI Status</h3>
-            <p class="blue" id="statusDisplay">Idle</p>
-        </div>
+        <div class="table-container">
 
-    </div>
+            <table id="dataTable">
 
-    <div class="form-card">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Sleep</th>
+                        <th>Study</th>
+                        <th>Social</th>
+                        <th>Grade</th>
+                        <th>Productivity</th>
+                        <th>Mood</th>
+                    </tr>
+                </thead>
 
-        <h2>Daily Analytics</h2>
+                <tbody></tbody>
 
-        <div class="input-group">
-            <label>Hours of Study</label>
-            <input type="number" id="study" placeholder="Example: 5">
-        </div>
-
-        <div class="input-group">
-            <label>Hours of Sleep</label>
-            <input type="number" id="sleep" placeholder="Example: 7">
-        </div>
-
-        <div class="input-group">
-            <label>Social Media Hours</label>
-            <input type="number" id="social" placeholder="Example: 3">
-        </div>
-
-        <div class="input-group">
-            <label>Academic Grade</label>
-            <input type="number" id="grade" placeholder="Example: 9">
-        </div>
-
-        <button onclick="analyzeData()">
-            Analyze Data
-        </button>
-
-        <div class="analysis-box" id="analysisBox">
-            Waiting for AI analysis...
-        </div>
-
-    </div>
-
-    <div class="chart-card">
-
-        <h2>Performance Analytics</h2>
-
-        <canvas id="analyticsChart"></canvas>
-
-    </div>
-
-    <div class="chart-card">
-
-        <h2>Recent Activity</h2>
-
-        <div id="historyContainer">
+            </table>
 
         </div>
 
     </div>
 
-</div>
-
-<div class="bottom-nav">
-
-    <div class="nav-item active">
-        <div>🏠</div>
-        <span>Home</span>
-    </div>
-
-    <div class="nav-item">
-        <div>📊</div>
-        <span>Analytics</span>
-    </div>
-
-    <div class="nav-item">
-        <div>🤖</div>
-        <span>AI Coach</span>
-    </div>
-
-    <div class="nav-item">
-        <div>👤</div>
-        <span>Profile</span>
+    <div class="footer">
+        StatMind Analytics Pro © 2026
     </div>
 
 </div>
 
 <script>
 
-let chart;
+document.addEventListener("DOMContentLoaded",()=>{
 
-function analyzeData(){
+    let studentData =
+        JSON.parse(localStorage.getItem("studentData")) || [];
 
-    let study =
-        parseFloat(document.getElementById('study').value);
-
-    let sleep =
-        parseFloat(document.getElementById('sleep').value);
-
-    let social =
-        parseFloat(document.getElementById('social').value);
-
-    let grade =
-        parseFloat(document.getElementById('grade').value);
-
-    if(
-        isNaN(study) ||
-        isNaN(sleep) ||
-        isNaN(social) ||
-        isNaN(grade)
-    ){
-        alert('Please complete all fields.');
-        return;
-    }
-
-    let score = Math.round(
-        (study*20 + sleep*10 + grade*8 - social*5)
-    );
-
-    if(score > 100){
-        score = 100;
-    }
-
-    if(score < 0){
-        score = 0;
-    }
-
-    let analysis = '';
-    let status = '';
-
-    if(score >= 85){
-
-        analysis =
-        'Excellent productivity detected. AI predicts high academic performance and excellent habit consistency.';
-
-        status = 'Excellent';
-
-    }
-
-    else if(score >= 60){
-
-        analysis =
-        'Good balance detected. Reducing social media usage could significantly improve your results.';
-
-        status = 'Good';
-
-    }
-
-    else{
-
-        analysis =
-        'Low productivity detected. AI recommends increasing study time and improving sleep quality.';
-
-        status = 'Warning';
-
-    }
-
-    document.getElementById('score').innerText =
-        score + '%';
-
-    document.getElementById('studyDisplay').innerText =
-        study + 'h';
-
-    document.getElementById('sleepDisplay').innerText =
-        Math.round((sleep/8)*100) + '%';
-
-    document.getElementById('gradeDisplay').innerText =
-        grade;
-
-    document.getElementById('statusDisplay').innerText =
-        status;
-
-    document.getElementById('analysisBox').innerText =
-        analysis;
-
-    document.getElementById('mainAnalysis').innerText =
-        analysis;
-
-    updateChart(study,sleep,social,grade);
-
-    localStorage.setItem('study',study);
-    localStorage.setItem('sleep',sleep);
-    localStorage.setItem('social',social);
-    localStorage.setItem('grade',grade);
-    localStorage.setItem('score',score);
-    localStorage.setItem('analysis',analysis);
-
-    let history =
-        JSON.parse(localStorage.getItem('history')) || [];
-
-    history.push({
-
-        study:study,
-        sleep:sleep,
-        social:social,
-        grade:grade,
-        score:score,
-        date:new Date().toLocaleString()
-
-    });
-
-    localStorage.setItem(
-        'history',
-        JSON.stringify(history)
-    );
-
-    loadHistory();
-
-}
-
-function updateChart(study,sleep,social,grade){
-
-    const ctx =
-        document.getElementById('analyticsChart');
-
-    if(chart){
-        chart.destroy();
-    }
-
-    chart = new Chart(ctx,{
-
-        type:'bar',
-
-        data:{
-
-            labels:[
-                'Study',
-                'Sleep',
-                'Social',
-                'Grade'
-            ],
-
-            datasets:[{
-
-                label:'Student Analytics',
-
-                data:[
-                    study,
-                    sleep,
-                    social,
-                    grade
-                ],
-
-                backgroundColor:[
-                    '#38BDF8',
-                    '#06B6D4',
-                    '#9333EA',
-                    '#22C55E'
-                ],
-
-                borderRadius:15
-
-            }]
-
-        },
-
-        options:{
-
-            responsive:true,
-
-            plugins:{
-
-                legend:{
-                    labels:{
-                        color:'white'
-                    }
-                }
-
+    const gradesChart = new Chart(
+        document.getElementById("gradesChart"),
+        {
+            type:'line',
+            data:{
+                labels:[],
+                datasets:[{
+                    label:'Grades Trend',
+                    data:[],
+                    borderColor:'#3b82f6',
+                    backgroundColor:'rgba(59,130,246,0.2)',
+                    borderWidth:3,
+                    fill:true,
+                    tension:0.3
+                }]
             },
+            options:{
+                responsive:true
+            }
+        }
+    );
 
-            scales:{
-
-                x:{
-                    ticks:{
-                        color:'white'
-                    }
-                },
-
-                y:{
-                    ticks:{
-                        color:'white'
+    const habitsChart = new Chart(
+        document.getElementById("habitsChart"),
+        {
+            type:'bar',
+            data:{
+                labels:['Sleep','Study','Social'],
+                datasets:[{
+                    label:'Average Hours',
+                    data:[0,0,0],
+                    backgroundColor:[
+                        '#3b82f6',
+                        '#22c55e',
+                        '#ef4444'
+                    ]
+                }]
+            },
+            options:{
+                responsive:true,
+                scales:{
+                    y:{
+                        beginAtZero:true
                     }
                 }
-
             }
+        }
+    );
+
+    window.saveData = function(){
+
+        let sleep = parseFloat(document.getElementById("sleep").value);
+        let study = parseFloat(document.getElementById("study").value);
+        let social = parseFloat(document.getElementById("social").value);
+        let grade = parseFloat(document.getElementById("grade").value);
+
+        let productivity = document.getElementById("productivity").value;
+        let mood = document.getElementById("mood").value;
+
+        if(
+            isNaN(sleep) ||
+            isNaN(study) ||
+            isNaN(social) ||
+            isNaN(grade)
+        ){
+            alert("Complete all fields");
+            return;
+        }
+
+        studentData.push({
+            sleep,
+            study,
+            social,
+            grade,
+            productivity,
+            mood
+        });
+
+        localStorage.setItem(
+            "studentData",
+            JSON.stringify(studentData)
+        );
+
+        updateUI();
+        clearInputs();
+
+    }
+
+    function updateUI(){
+
+        if(studentData.length === 0){
+            return;
+        }
+
+        let totalSleep = 0;
+        let totalStudy = 0;
+        let totalGrade = 0;
+        let totalSocial = 0;
+
+        studentData.forEach(item=>{
+            totalSleep += item.sleep;
+            totalStudy += item.study;
+            totalGrade += item.grade;
+            totalSocial += item.social;
+        });
+
+        let avgSleep = (totalSleep/studentData.length).toFixed(1);
+        let avgStudy = (totalStudy/studentData.length).toFixed(1);
+        let avgGrade = (totalGrade/studentData.length).toFixed(1);
+        let avgSocial = (totalSocial/studentData.length).toFixed(1);
+
+        document.getElementById("avgSleep").innerText = avgSleep;
+        document.getElementById("avgStudy").innerText = avgStudy;
+        document.getElementById("avgGrade").innerText = avgGrade;
+
+        updateCharts();
+        updateTable();
+        generateAnalysis(avgSleep,avgStudy,avgGrade,avgSocial);
+        calculateCorrelation();
+        generateAchievement(avgGrade);
+
+    }
+
+    function updateCharts(){
+
+        gradesChart.data.labels =
+            studentData.map((_,i)=>`Day ${i+1}`);
+
+        gradesChart.data.datasets[0].data =
+            studentData.map(item=>item.grade);
+
+        gradesChart.update();
+
+        let avgSleep =
+            studentData.reduce((a,b)=>a+b.sleep,0)
+            / studentData.length;
+
+        let avgStudy =
+            studentData.reduce((a,b)=>a+b.study,0)
+            / studentData.length;
+
+        let avgSocial =
+            studentData.reduce((a,b)=>a+b.social,0)
+            / studentData.length;
+
+        habitsChart.data.datasets[0].data = [
+            avgSleep.toFixed(1),
+            avgStudy.toFixed(1),
+            avgSocial.toFixed(1)
+        ];
+
+        habitsChart.update();
+
+    }
+
+    function generateAnalysis(
+        avgSleep,
+        avgStudy,
+        avgGrade,
+        avgSocial
+    ){
+
+        let text = "";
+
+        if(avgSleep < 6){
+            text += "⚠️ Low sleep detected.<br><br>";
+        }else{
+            text += "✅ Healthy sleep habits.<br><br>";
+        }
+
+        if(avgStudy >= 4){
+            text += "📚 Excellent study consistency.<br><br>";
+        }else{
+            text += "📖 Increase study hours.<br><br>";
+        }
+
+        if(avgSocial > 5){
+            text += "📱 High social media usage may reduce productivity.<br><br>";
+        }
+
+        if(avgGrade >= 8){
+            text += "🏆 Strong academic performance.<br><br>";
+        }else{
+            text += "💡 Improve study strategy.<br><br>";
+        }
+
+        text += "🤖 AI Prediction: Higher study hours are associated with better grades.";
+
+        document.getElementById("analysis").innerHTML = text;
+
+    }
+
+    function calculateCorrelation(){
+
+        if(studentData.length < 2){
+            return;
+        }
+
+        let study = studentData.map(d=>d.study);
+        let grade = studentData.map(d=>d.grade);
+
+        let n = study.length;
+
+        let sumX = study.reduce((a,b)=>a+b,0);
+        let sumY = grade.reduce((a,b)=>a+b,0);
+
+        let sumXY = 0;
+        let sumX2 = 0;
+        let sumY2 = 0;
+
+        for(let i=0;i<n;i++){
+            sumXY += study[i]*grade[i];
+            sumX2 += study[i]*study[i];
+            sumY2 += grade[i]*grade[i];
+        }
+
+        let correlation =
+            (
+                n*sumXY - sumX*sumY
+            ) /
+            Math.sqrt(
+                (n*sumX2 - sumX**2)
+                *
+                (n*sumY2 - sumY**2)
+            );
+
+        document.getElementById("correlation")
+            .innerText = correlation.toFixed(2);
+
+    }
+
+    function generateAchievement(avgGrade){
+
+        let achievement = "🎯 Keep tracking your habits!";
+
+        if(avgGrade >= 9){
+            achievement = "🏆 Academic Master";
+        }
+        else if(avgGrade >= 8){
+            achievement = "⭐ Excellent Student";
+        }
+        else if(avgGrade >= 7){
+            achievement = "📚 Good Progress";
+        }
+
+        document.getElementById("achievement")
+            .innerHTML = achievement;
+
+    }
+
+    function updateTable(){
+
+        let tbody = document.querySelector(
+            "#dataTable tbody"
+        );
+
+        tbody.innerHTML = "";
+
+        studentData.forEach((item,index)=>{
+
+            tbody.innerHTML += `
+
+            <tr>
+                <td>${index+1}</td>
+                <td>${item.sleep}</td>
+                <td>${item.study}</td>
+                <td>${item.social}</td>
+                <td>${item.grade}</td>
+                <td>${item.productivity}</td>
+                <td>${item.mood}</td>
+            </tr>
+
+            `;
+
+        });
+
+    }
+
+    function clearInputs(){
+
+        document.getElementById("sleep").value = "";
+        document.getElementById("study").value = "";
+        document.getElementById("social").value = "";
+        document.getElementById("grade").value = "";
+
+    }
+
+    window.clearData = function(){
+
+        if(confirm("Delete all data?")){
+
+            localStorage.removeItem("studentData");
+            location.reload();
 
         }
 
-    });
-
-}
-
-function loadHistory(){
-
-    let history =
-        JSON.parse(localStorage.getItem('history')) || [];
-
-    let container =
-        document.getElementById('historyContainer');
-
-    container.innerHTML = '';
-
-    history.reverse().slice(0,5).forEach(item => {
-
-        container.innerHTML += `
-
-        <div class="history-item">
-
-            <div class="history-score">
-                ${item.score}%
-            </div>
-
-            <div class="history-text">
-
-                Study: ${item.study}h
-                <br>
-
-                Sleep: ${item.sleep}h
-                <br>
-
-                Grade: ${item.grade}
-
-            </div>
-
-            <small class="history-date">
-                ${item.date}
-            </small>
-
-        </div>
-
-        `;
-
-    });
-
-}
-
-window.onload = function(){
-
-    let savedStudy =
-        localStorage.getItem('study');
-
-    let savedSleep =
-        localStorage.getItem('sleep');
-
-    let savedSocial =
-        localStorage.getItem('social');
-
-    let savedGrade =
-        localStorage.getItem('grade');
-
-    let savedScore =
-        localStorage.getItem('score');
-
-    let savedAnalysis =
-        localStorage.getItem('analysis');
-
-    if(savedStudy){
-
-        document.getElementById('study').value =
-            savedStudy;
-
-        document.getElementById('sleep').value =
-            savedSleep;
-
-        document.getElementById('social').value =
-            savedSocial;
-
-        document.getElementById('grade').value =
-            savedGrade;
-
-        document.getElementById('score').innerText =
-            savedScore + '%';
-
-        document.getElementById('analysisBox').innerText =
-            savedAnalysis;
-
-        document.getElementById('mainAnalysis').innerText =
-            savedAnalysis;
-
-        document.getElementById('studyDisplay').innerText =
-            savedStudy + 'h';
-
-        document.getElementById('sleepDisplay').innerText =
-            Math.round((savedSleep/8)*100) + '%';
-
-        document.getElementById('gradeDisplay').innerText =
-            savedGrade;
-
-        updateChart(
-            savedStudy,
-            savedSleep,
-            savedSocial,
-            savedGrade
-        );
-
     }
 
-    loadHistory();
+    updateUI();
 
-}
+});
 
 </script>
 
